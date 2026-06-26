@@ -232,6 +232,24 @@ The GEO/AEO/AIO engineering stack spans graph databases, vector indexes, verifia
 
 ---
 
+### Interactive Tools
+
+<div class="tools-grid">
+
+<div class="tool-card">
+<h3>🧮 GEO Score Calculator <span style="font-size:0.7rem;color:var(--color-accent-dark);font-weight:600;">v0.1.0</span></h3>
+<p>Interactive estimator for citation probability across transformer-based RAG pipelines. Adjust entity density, structured data completeness, factual consistency, topological centrality, and freshness parameters — visualize the composite GEO Score in real time with dimension breakdown.</p>
+<div class="tool-meta">
+<span>Interactive Tool</span>
+<span>JavaScript</span>
+</div>
+<a href="/tools/geo-score-calculator/" class="btn btn-outline" style="margin-top: var(--space-sm);">Launch Calculator →</a>
+</div>
+
+</div>
+
+---
+
 *This registry is continuously updated as the GEO/AEO/AIO tool ecosystem evolves. v0.1.0 — Last updated: June 2026.*
 
 <a href="/contact/" class="btn btn-primary" style="margin-top: var(--space-xl);">Research Collaboration →</a>

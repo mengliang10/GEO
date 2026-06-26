@@ -28,6 +28,9 @@ main:
     url: "/case-studies/"
   - title: "Tools"
     url: "/tools/"
+    children:
+      - title: "GEO Score Calculator"
+        url: "/tools/geo-score-calculator/"
   - title: "About"
     url: "/about/"
   - title: "Contact"
