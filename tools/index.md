@@ -246,6 +246,16 @@ The GEO/AEO/AIO engineering stack spans graph databases, vector indexes, verifia
 <a href="/tools/geo-score-calculator/" class="btn btn-outline" style="margin-top: var(--space-sm);">Launch Calculator →</a>
 </div>
 
+<div class="tool-card">
+<h3>🤖 AEO Maturity Assessment <span style="font-size:0.7rem;color:var(--color-accent-dark);font-weight:600;">v0.1.0</span></h3>
+<p>Multi-step questionnaire evaluating your organization's autonomous agent commerce readiness across 5 dimensions. Assess Semantic Layer, Authentication, Capability Discovery, Transaction API, and Agent Negotiation — receive a composite maturity score (L1-L5) with prioritized recommendations.</p>
+<div class="tool-meta">
+<span>Interactive Tool</span>
+<span>JavaScript</span>
+</div>
+<a href="/tools/aeo-maturity-assessment/" class="btn btn-outline" style="margin-top: var(--space-sm);">Start Assessment →</a>
+</div>
+
 </div>
 
 ---

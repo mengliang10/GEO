@@ -1,0 +1,535 @@
+---
+layout: default
+title: "AEO Maturity Assessment v0.1.0 — Agent Commerce Readiness Evaluator"
+subtitle: "Assess your organization's autonomous agent commerce readiness across 5 dimensions. [WORK IN PROCESS — v0.1.0]"
+sidebar: false
+---
+
+<style>
+/* ─── AEO Assessment Styles ───────────────────────────────────────────── */
+.aeo-assessment {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-2xl) 0;
+}
+
+/* Progress Bar */
+.aeo-progress {
+  margin-bottom: var(--space-2xl);
+}
+
+.aeo-progress-steps {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+  position: relative;
+}
+
+.aeo-progress-steps::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-border);
+  transform: translateY(-50%);
+  z-index: 0;
+}
+
+.aeo-step-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.aeo-step-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: var(--color-border);
+  color: var(--color-text-muted);
+  transition: all 0.3s ease;
+}
+
+.aeo-step-circle.active {
+  background: var(--color-accent-gradient);
+  color: white;
+  box-shadow: 0 0 12px rgba(0, 188, 212, 0.3);
+}
+
+.aeo-step-circle.completed {
+  background: #00e676;
+  color: white;
+}
+
+.aeo-step-label {
+  font-size: 0.65rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  max-width: 80px;
+}
+
+.aeo-step-label.active {
+  color: var(--color-accent-dark);
+  font-weight: 600;
+}
+
+.aeo-progress-bar {
+  height: 4px;
+  background: var(--color-border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: var(--space-md);
+}
+
+.aeo-progress-fill {
+  height: 100%;
+  background: var(--color-accent-gradient);
+  border-radius: 2px;
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 0%;
+}
+
+/* Question Card */
+.aeo-step-content {
+  display: none;
+}
+
+.aeo-step-content.active {
+  display: block;
+  animation: fadeInUp 0.4s ease;
+}
+
+.aeo-step-header {
+  margin-bottom: var(--space-xl);
+}
+
+.aeo-step-title {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--space-sm);
+}
+
+.aeo-step-desc {
+  color: var(--color-text-light);
+  font-size: var(--font-size-base);
+}
+
+.aeo-question {
+  margin-bottom: var(--space-lg);
+  padding: var(--space-lg);
+  background: var(--color-bg-alt);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  transition: all 0.3s ease;
+}
+
+.aeo-question.answered {
+  border-color: var(--color-accent);
+  background: rgba(0, 188, 212, 0.03);
+}
+
+.aeo-q-text {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-brand);
+  margin-bottom: var(--space-md);
+}
+
+.aeo-q-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.aeo-q-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--color-bg);
+}
+
+.aeo-q-option:hover {
+  border-color: var(--color-accent);
+  background: rgba(0, 188, 212, 0.03);
+}
+
+.aeo-q-option.selected {
+  border-color: var(--color-accent);
+  background: rgba(0, 188, 212, 0.08);
+}
+
+.aeo-q-option input[type="radio"] {
+  display: none;
+}
+
+.aeo-q-radio {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.aeo-q-radio.selected {
+  border-color: var(--color-accent);
+}
+
+.aeo-q-radio.selected::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.aeo-q-option-text {
+  flex: 1;
+}
+
+.aeo-q-label {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.aeo-q-desc {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.aeo-q-score {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+/* Navigation Buttons */
+.aeo-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-xl);
+  gap: var(--space-md);
+}
+
+.aeo-nav .btn {
+  min-width: 140px;
+}
+
+.aeo-nav .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ─── Results Page ─────────────────────────────────────────────────────── */
+.aeo-results {
+  display: none;
+  animation: fadeInUp 0.6s ease;
+}
+
+.aeo-results.active {
+  display: block;
+}
+
+.aeo-results-header {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+}
+
+.aeo-results-header h2 {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--space-sm);
+}
+
+.aeo-score-big {
+  font-size: 5rem;
+  font-weight: 800;
+  background: var(--color-accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.aeo-level-badge {
+  display: inline-block;
+  padding: 6px 20px;
+  border-radius: 100px;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  margin: var(--space-md) 0;
+}
+
+.aeo-level-badge.l1 { background: rgba(255, 82, 82, 0.15); color: #ff5252; }
+.aeo-level-badge.l2 { background: rgba(255, 215, 64, 0.15); color: #ffd740; }
+.aeo-level-badge.l3 { background: rgba(0, 188, 212, 0.15); color: #00bcd4; }
+.aeo-level-badge.l4 { background: rgba(124, 77, 255, 0.15); color: #7c4dff; }
+.aeo-level-badge.l5 { background: rgba(0, 230, 118, 0.15); color: #00e676; }
+
+.aeo-dims-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  margin: var(--space-2xl) 0;
+}
+
+@media (max-width: 768px) {
+  .aeo-dims-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.aeo-dim-card {
+  padding: var(--space-lg);
+  background: var(--color-bg-alt);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+}
+
+.aeo-dim-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-sm);
+}
+
+.aeo-dim-name {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.aeo-dim-score {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-accent-dark);
+}
+
+.aeo-dim-bar {
+  height: 6px;
+  background: var(--color-border);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: var(--space-sm);
+}
+
+.aeo-dim-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 1s ease;
+}
+
+.aeo-dim-desc {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.aeo-recs {
+  margin-top: var(--space-2xl);
+  padding: var(--space-xl);
+  background: var(--color-bg-alt);
+  border-radius: var(--radius-lg);
+}
+
+.aeo-recs h3 {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.aeo-rec-item {
+  display: flex;
+  gap: var(--space-md);
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.aeo-rec-item:last-child {
+  border-bottom: none;
+}
+
+.aeo-rec-priority {
+  width: 80px;
+  flex-shrink: 0;
+  text-align: center;
+  padding: 4px 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.aeo-rec-priority.high {
+  color: #ff5252;
+}
+
+.aeo-rec-priority.medium {
+  color: #ffd740;
+}
+
+.aeo-rec-priority.low {
+  color: #00e676;
+}
+
+.aeo-rec-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  line-height: 1.6;
+}
+
+/* Reset button */
+.aeo-restart {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  transition: color 0.2s;
+  background: none;
+  border: none;
+  font-family: var(--font-sans);
+}
+
+.aeo-restart:hover {
+  color: var(--color-accent-dark);
+}
+
+/* Weight details */
+.aeo-weights {
+  margin-top: var(--space-lg);
+  padding: var(--space-md);
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+}
+
+.aeo-weights summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--color-text-light);
+}
+
+.aeo-weight-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+</style>
+
+<div class="aeo-assessment">
+
+  <div class="section-header" style="margin-bottom: var(--space-xl);">
+    <span class="section-label">Interactive Tool · v0.1.0</span>
+    <h2>AEO Maturity Assessment</h2>
+    <p>Evaluate your organization's autonomous agent commerce readiness across 5 dimensions — Semantic Layer, Authentication, Capability Discovery, Transaction API, and Agent Negotiation.</p>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="aeo-progress" id="aeoProgress">
+    <div class="aeo-progress-steps">
+      <div class="aeo-step-indicator">
+        <div class="aeo-step-circle active" id="stepCircle0">1</div>
+        <div class="aeo-step-label active" id="stepLabel0">Semantic Layer</div>
+      </div>
+      <div class="aeo-step-indicator">
+        <div class="aeo-step-circle" id="stepCircle1">2</div>
+        <div class="aeo-step-label" id="stepLabel1">Auth</div>
+      </div>
+      <div class="aeo-step-indicator">
+        <div class="aeo-step-circle" id="stepCircle2">3</div>
+        <div class="aeo-step-label" id="stepLabel2">Discovery</div>
+      </div>
+      <div class="aeo-step-indicator">
+        <div class="aeo-step-circle" id="stepCircle3">4</div>
+        <div class="aeo-step-label" id="stepLabel3">Transaction API</div>
+      </div>
+      <div class="aeo-step-indicator">
+        <div class="aeo-step-circle" id="stepCircle4">5</div>
+        <div class="aeo-step-label" id="stepLabel4">Negotiation</div>
+      </div>
+    </div>
+    <div class="aeo-progress-bar">
+      <div class="aeo-progress-fill" id="aeoProgressFill"></div>
+    </div>
+  </div>
+
+  <!-- Step Container -->
+  <div id="aeoStepContainer">
+    <!-- Steps are rendered by JavaScript -->
+  </div>
+
+  <!-- Navigation -->
+  <div class="aeo-nav" id="aeoNav">
+    <button class="btn btn-outline" id="aeoPrevBtn" onclick="aeoPrev()" disabled>← Previous</button>
+    <span style="flex:1"></span>
+    <button class="btn btn-primary" id="aeoNextBtn" onclick="aeoNext()" disabled>Next →</button>
+  </div>
+
+  <!-- Results -->
+  <div class="aeo-results" id="aeoResults">
+    <div class="aeo-results-header">
+      <div class="aeo-score-big" id="aeoFinalScore">0.0</div>
+      <div class="aeo-level-badge l1" id="aeoLevelBadge">L1 — HUMAN-ONLY</div>
+      <p id="aeoLevelDesc" style="color: var(--color-text-light);">Your organization's agent commerce readiness assessment.</p>
+    </div>
+
+    <div class="aeo-dims-grid" id="aeoDimResults">
+      <!-- Dimension cards rendered by JS -->
+    </div>
+
+    <div class="aeo-recs" id="aeoRecs">
+      <h3>Recommendations</h3>
+      <div id="aeoRecList">
+        <!-- Recommendations rendered by JS -->
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: var(--space-2xl);">
+      <button class="btn btn-primary" onclick="aeoRestart()">Restart Assessment →</button>
+      <a href="/contact/" class="btn btn-outline" style="margin-left: var(--space-md);">Discuss Results →</a>
+    </div>
+  </div>
+
+  <details class="aeo-weights">
+    <summary>Weight Configuration &amp; Methodology</summary>
+    <p style="font-size:0.8rem;color:var(--color-text-muted);margin-bottom:var(--space-sm);">
+      Composite score: ρ(o) = 0.25·SL + 0.20·Auth + 0.20·CD + 0.20·API + 0.15·AN
+    </p>
+    <div class="aeo-weight-row"><span>Semantic Layer (SL)</span><span>0.25</span></div>
+    <div class="aeo-weight-row"><span>Authentication (Auth)</span><span>0.20</span></div>
+    <div class="aeo-weight-row"><span>Capability Discovery (CD)</span><span>0.20</span></div>
+    <div class="aeo-weight-row"><span>Transaction API (API)</span><span>0.20</span></div>
+    <div class="aeo-weight-row"><span>Agent Negotiation (AN)</span><span>0.15</span></div>
+    <p style="font-size:0.75rem;color:var(--color-text-muted);margin-top:var(--space-sm);">
+      The AEO Maturity Assessment is adapted from the AEO-ML v0.1 framework. Each dimension is scored 0.0-1.0 based on 
+      3-4 multiple-choice questions. The composite score determines the overall maturity level (L1-L5). 
+      This is a research tool — results are directional estimates.
+    </p>
+  </details>
+</div>
+
+<script src="{{ '/assets/js/aeo-maturity.js' | relative_url }}"></script>

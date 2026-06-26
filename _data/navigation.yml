@@ -31,6 +31,8 @@ main:
     children:
       - title: "GEO Score Calculator"
         url: "/tools/geo-score-calculator/"
+      - title: "AEO Maturity Assessment"
+        url: "/tools/aeo-maturity-assessment/"
   - title: "About"
     url: "/about/"
   - title: "Contact"
