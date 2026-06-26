@@ -1,0 +1,43 @@
+# ─── Main Navigation ─────────────────────────────────────────────────────────
+main:
+  - title: "Home"
+    url: "/"
+  - title: "Services"
+    url: "/services/"
+    children:
+      - title: "GEO Optimization"
+        url: "/services/geo-optimization/"
+      - title: "AEO Optimization"
+        url: "/services/aeo-optimization/"
+      - title: "AIO Strategy"
+        url: "/services/aio-strategy/"
+  - title: "Learning"
+    url: "/education/"
+    children:
+      - title: "What is GEO?"
+        url: "/education/what-is-geo/"
+      - title: "Understanding AEO"
+        url: "/education/understanding-aeo/"
+      - title: "AIO Framework"
+        url: "/education/aio-framework/"
+      - title: "Martech Architecture"
+        url: "/education/martech-architecture/"
+  - title: "Blog"
+    url: "/blog/"
+  - title: "Case Studies"
+    url: "/case-studies/"
+  - title: "Tools"
+    url: "/tools/"
+  - title: "About"
+    url: "/about/"
+  - title: "Contact"
+    url: "/contact/"
+
+# ─── Footer Navigation ──────────────────────────────────────────────────────
+footer:
+  - title: "Privacy Policy"
+    url: "/privacy/"
+  - title: "Terms of Service"
+    url: "/terms/"
+  - title: "Sitemap"
+    url: "/sitemap.xml"

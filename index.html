@@ -1,0 +1,201 @@
+---
+layout: default
+title: "GEONEXUS — GEO · AEO · AIO Agency & Education Platform"
+description: "GEONEXUS is a next-generation agency specializing in Generative Engine Optimization (GEO), AI Engine Optimization (AEO), and AI Optimization (AIO). Future-proof your content for the AI era."
+body_class: home
+---
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content animate-in">
+        <div class="hero-badge">
+          <span>✦</span>
+          <span>Welcome to the Age of AI Discovery</span>
+        </div>
+        <h1>Engineer Your Content for the<br><span class="highlight">AI-First</span> World</h1>
+        <p>
+          GEONEXUS is a next-generation agency and education platform purpose-built for 
+          Generative Engine Optimization (GEO), AI Engine Optimization (AEO), and 
+          Artificial Intelligence Optimization (AIO). We help enterprises architect, 
+          optimize, and dominate AI-driven discovery ecosystems.
+        </p>
+        <div class="hero-actions">
+          <a href="{{ '/services/' | relative_url }}" class="btn btn-primary">Explore Our Services</a>
+          <a href="{{ '/contact/' | relative_url }}" class="btn btn-secondary">Book a Strategy Session</a>
+        </div>
+      </div>
+
+      <div class="hero-stats animate-in animate-in-delay-1">
+        <div class="stat-card">
+          <div class="stat-number">100M+</div>
+          <div class="stat-label">AI Queries Daily</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">78%</div>
+          <div class="stat-label">of Users Trust AI Summaries</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">3×</div>
+          <div class="stat-label">Traffic from GEO Optimization</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">92%</div>
+          <div class="stat-label">AEO-optimized Pages Gain Visibility</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-label">Our Core Capabilities</span>
+      <h2>Three Pillars of AI-First Content Strategy</h2>
+      <p>We combine cutting-edge research with enterprise-grade execution across the three disciplines that define modern digital presence.</p>
+    </div>
+
+    <div class="services-grid">
+      <article class="service-card animate-on-scroll">
+        <div class="service-icon">🌐</div>
+        <h3>Generative Engine Optimization</h3>
+        <p>Optimize your content for AI search engines like ChatGPT, Perplexity, Claude, and Google Gemini. We implement structured data, entity frameworks, and topical authority models that make your brand the default answer.</p>
+        <a href="{{ '/services/geo-optimization/' | relative_url }}" class="btn btn-outline">Learn More →</a>
+      </article>
+
+      <article class="service-card animate-on-scroll">
+        <div class="service-icon">🤖</div>
+        <h3>AI Engine Optimization</h3>
+        <p>Prepare your digital ecosystem for agentic AI commerce. We architect machine-readable knowledge graphs, API-first content delivery, and LLM-friendly data structures that enable AI agents to understand, trust, and transact with your brand.</p>
+        <a href="{{ '/services/aeo-optimization/' | relative_url }}" class="btn btn-outline">Learn More →</a>
+      </article>
+
+      <article class="service-card animate-on-scroll">
+        <div class="service-icon">🧠</div>
+        <h3>AI Optimization Strategy</h3>
+        <p>End-to-end AI readiness for your martech stack. From composable CDPs and knowledge graph architecture to AI governance frameworks and predictive analytics — we build the infrastructure that powers intelligent decisioning.</p>
+        <a href="{{ '/services/aio-strategy/' | relative_url }}" class="btn btn-outline">Learn More →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" id="insights">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-label">Latest Insights</span>
+      <h2>Thought Leadership at the Frontier</h2>
+      <p>Research, analysis, and frameworks drawn from real enterprise transformations in martech, knowledge graphs, and AI optimization.</p>
+    </div>
+
+    <div class="posts-grid">
+      {% for post in site.posts limit:3 %}
+      <article class="post-card animate-on-scroll">
+        <div class="post-card-body">
+          {% if post.categories %}
+          <span class="post-card-category">{{ post.categories | first }}</span>
+          {% endif %}
+          <h3 class="post-card-title">
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          </h3>
+          <p class="post-card-excerpt">{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+          <div class="post-card-meta">
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+
+    <div style="text-align: center; margin-top: var(--space-2xl);">
+      <a href="{{ '/blog/' | relative_url }}" class="btn btn-outline">View All Articles →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="case-studies">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-label">Proven Results</span>
+      <h2>Enterprise Case Studies</h2>
+      <p>Deep-dive analyses of real-world martech transformations, AI readiness assessments, and GEO/AEO implementations.</p>
+    </div>
+
+    <div class="case-studies-grid">
+      <article class="case-card animate-on-scroll">
+        <div class="case-company">DBS Bank</div>
+        <h3>Martech Stack Modernization & Knowledge Graph Implementation</h3>
+        <p>Comprehensive audit and revamp of DBS Bank's marketing technology stack, including tag management consolidation, CDN optimization, and knowledge graph-powered intelligence architecture.</p>
+        <div class="case-metrics">
+          <div class="case-metric">
+            <div class="case-metric-value">0.8s</div>
+            <div class="case-metric-label">Page Load Improvement</div>
+          </div>
+          <div class="case-metric">
+            <div class="case-metric-value">916%</div>
+            <div class="case-metric-label">Projected ROI</div>
+          </div>
+          <div class="case-metric">
+            <div class="case-metric-value">115K+</div>
+            <div class="case-metric-label">Knowledge Graph Nodes</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="case-card animate-on-scroll">
+        <div class="case-company">The Ascott Limited</div>
+        <h3>Digital Evolution & AEO Readiness Roadmap</h3>
+        <p>Strategic assessment of Ascott's martech ecosystem, including Salesforce Data Cloud integration, AI concierge (Cubby) evolution, and AEO (AI Engine Optimization) strategy for hospitality.</p>
+        <div class="case-metrics">
+          <div class="case-metric">
+            <div class="case-metric-value">14</div>
+            <div class="case-metric-label">Brands Unified</div>
+          </div>
+          <div class="case-metric">
+            <div class="case-metric-value">900K+</div>
+            <div class="case-metric-label">AI Enquiries Handled</div>
+          </div>
+          <div class="case-metric">
+            <div class="case-metric-value">24-36mo</div>
+            <div class="case-metric-label">Tech Lead Over Competitors</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="case-card animate-on-scroll">
+        <div class="case-company">Frasers Hospitality</div>
+        <h3>Composable CDP & AI-First Data Architecture</h3>
+        <p>Roadmap for transitioning from a legacy, conservative tech stack to a modern, AI-ready infrastructure including BigQuery-powered CDP, mobile loyalty platform, and API-first architecture.</p>
+        <div class="case-metrics">
+          <div class="case-metric">
+            <div class="case-metric-value">4</div>
+            <div class="case-metric-label">Phase 1 Initiatives</div>
+          </div>
+          <div class="case-metric">
+            <div class="case-metric-value">12mo</div>
+            <div class="case-metric-label">Foundation Timeline</div>
+          </div>
+          <div class="case-metric">
+            <div class="case-metric-value">Agentic</div>
+            <div class="case-metric-label">AI Commerce Ready</div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div style="text-align: center; margin-top: var(--space-2xl);">
+      <a href="{{ '/case-studies/' | relative_url }}" class="btn btn-outline">View All Case Studies →</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section section-dark" id="cta">
+  <div class="container">
+    <div class="animate-on-scroll">
+      <h2>Ready to Dominate AI-Driven Discovery?</h2>
+      <p>Schedule a complimentary GEO/AEO readiness assessment. We'll analyze your current AI discoverability and deliver a customized optimization roadmap.</p>
+      <a href="{{ '/contact/' | relative_url }}" class="btn btn-primary">Start Your Assessment →</a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,83 @@
+# ─── Site Settings ────────────────────────────────────────────────────────────
+title: "GEONEXUS"
+tagline: "GEO · AEO · AIO — Engineering the Future of AI-Discoverable Content"
+description: >-
+  GEONEXUS is a next-generation agency and education platform specializing in
+  Generative Engine Optimization (GEO), AI Engine Optimization (AEO), and
+  Artificial Intelligence Optimization (AIO). We help enterprises architect,
+  optimize, and future-proof their digital presence for the age of AI-driven
+  discovery.
+url: "https://mengliang10.github.io"
+baseurl: "/GEO"
+
+# ─── Author ──────────────────────────────────────────────────────────────────
+author:
+  name: "Tan Meng Liang"
+  email: "mengliang10@users.noreply.github.com"
+  url: "https://github.com/mengliang10"
+
+# ─── Social ──────────────────────────────────────────────────────────────────
+social:
+  name: "GEONEXUS"
+  links:
+    - "https://github.com/mengliang10/GEO"
+
+# ─── Build Settings ──────────────────────────────────────────────────────────
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+paginate: 6
+paginate_path: "/blog/page:num/"
+
+# ─── Collections ─────────────────────────────────────────────────────────────
+collections:
+  services:
+    output: true
+    permalink: /services/:path/
+  case_studies:
+    output: true
+    permalink: /case-studies/:path/
+
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      permalink: /blog/:year/:month/:day/:title/
+  - scope:
+      path: ""
+      type: "services"
+    values:
+      layout: "page"
+  - scope:
+      path: ""
+      type: "case_studies"
+    values:
+      layout: "page"
+
+# ─── Plugins ─────────────────────────────────────────────────────────────────
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-paginate
+
+# ─── Exclusions ──────────────────────────────────────────────────────────────
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
+  - .gitignore
+  - node_modules
+
+# ─── Include ─────────────────────────────────────────────────────────────────
+include:
+  - .well-known
+  - .github

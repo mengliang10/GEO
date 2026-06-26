@@ -1,0 +1,60 @@
+---
+layout: default
+title: "Blog"
+subtitle: "Insights, analysis, and thought leadership at the frontier of GEO, AEO, and AIO."
+---
+
+<section class="blog-header">
+  <div class="container">
+    <h1>Blog</h1>
+    <p>Insights, analysis, and thought leadership at the frontier of GEO, AEO, and AIO.</p>
+  </div>
+</section>
+
+<section class="blog-list">
+  <div class="container">
+    <div class="posts-grid">
+      {% for post in paginator.posts %}
+      <article class="post-card">
+        <div class="post-card-body">
+          {% if post.categories %}
+          <span class="post-card-category">{{ post.categories | first }}</span>
+          {% endif %}
+          <h3 class="post-card-title">
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          </h3>
+          <p class="post-card-excerpt">{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+          <div class="post-card-meta">
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
+            {% if post.tags %}
+            <span>{{ post.tags | first }}</span>
+            {% endif %}
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+
+    {% if paginator.total_pages > 1 %}
+    <nav class="pagination" aria-label="Blog pagination">
+      {% if paginator.previous_page %}
+      <a href="{{ paginator.previous_page_path | relative_url }}">← Previous</a>
+      {% endif %}
+      
+      {% for page in (1..paginator.total_pages) %}
+        {% if page == paginator.page %}
+        <span class="current">{{ page }}</span>
+        {% elsif page == 1 %}
+        <a href="{{ '/blog/' | relative_url }}">{{ page }}</a>
+        {% else %}
+        <a href="{{ '/blog/page' | append: page | relative_url }}">{{ page }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if paginator.next_page %}
+      <a href="{{ paginator.next_page_path | relative_url }}">Next →</a>
+      {% endif %}
+    </nav>
+    {% endif %}
+  </div>
+</section>

@@ -1,0 +1,79 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }} — {{ site.tagline }}{% endif %}</title>
+<meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description | truncate: 160 }}{% endif %}">
+
+{% if page.tags %}<meta name="keywords" content="{{ page.tags | join: ', ' }}">{% endif %}
+
+<!-- Canonical URL -->
+<link rel="canonical" href="{{ site.url }}{{ site.baseurl }}{{ page.url | replace:'index.html','' }}">
+
+<!-- Open Graph -->
+<meta property="og:title" content="{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}">
+<meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
+<meta property="og:url" content="{{ site.url }}{{ site.baseurl }}{{ page.url | replace:'index.html','' }}">
+<meta property="og:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 200 }}{% else %}{{ site.description | truncate: 200 }}{% endif %}">
+<meta property="og:site_name" content="{{ site.title }}">
+{% if page.image %}<meta property="og:image" content="{{ site.url }}{{ site.baseurl }}{{ page.image }}">{% endif %}
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}">
+<meta name="twitter:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 200 }}{% else %}{{ site.description | truncate: 200 }}{% endif %}">
+{% if page.image %}<meta name="twitter:image" content="{{ site.url }}{{ site.baseurl }}{{ page.image }}">{% endif %}
+
+<!-- Schema.org JSON-LD - Organization -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "{{ site.title }}",
+  "url": "{{ site.url }}{{ site.baseurl }}",
+  "description": "{{ site.description }}",
+  "foundingDate": "2026",
+  "knowsAbout": ["Generative Engine Optimization", "AI Engine Optimization", "Artificial Intelligence Optimization", "Marketing Technology", "Knowledge Graphs"],
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "SG"
+  }
+}
+</script>
+
+<!-- GEO-optimized: Topic Cluster JSON-LD -->
+{% if page.layout == "post" or page.layout == "page" %}
+{% assign topic = page.categories | first | default: "GEO-AEO-AIO" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ page.title | escape }}",
+  "description": "{{ page.excerpt | strip_html | strip_newlines | truncate: 200 | escape }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ site.author.name }}"
+  },
+  "datePublished": "{{ page.date | date: '%Y-%m-%d' | default: site.time }}",
+  "dateModified": "{{ page.last_modified_at | default: page.date | date: '%Y-%m-%d' | default: site.time }}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ site.url }}{{ site.baseurl }}{{ page.url }}"
+  },
+  "about": {
+    "@type": "Thing",
+    "name": "{{ topic }}",
+    "description": "{{ site.description | truncate: 200 | escape }}"
+  }
+}
+</script>
+{% endif %}
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="{{ '/assets/images/favicon.svg' | relative_url }}">
+
+<!-- Stylesheets -->
+<link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.time | date: '%s' | relative_url }}">
+
+{% seo %}
+{% feed_meta %}

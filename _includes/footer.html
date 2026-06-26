@@ -1,0 +1,50 @@
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo">◆ {{ site.title }}</span>
+        <p class="footer-tagline">{{ site.tagline }}</p>
+        <p class="footer-description">{{ site.description }}</p>
+      </div>
+
+      <div class="footer-nav">
+        <h3 class="footer-heading">Services</h3>
+        <ul>
+          <li><a href="{{ '/services/geo-optimization/' | relative_url }}">GEO Optimization</a></li>
+          <li><a href="{{ '/services/aeo-optimization/' | relative_url }}">AEO Optimization</a></li>
+          <li><a href="{{ '/services/aio-strategy/' | relative_url }}">AIO Strategy</a></li>
+          <li><a href="{{ '/services/' | relative_url }}">All Services</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-nav">
+        <h3 class="footer-heading">Learn</h3>
+        <ul>
+          <li><a href="{{ '/education/what-is-geo/' | relative_url }}">What is GEO?</a></li>
+          <li><a href="{{ '/education/understanding-aeo/' | relative_url }}">Understanding AEO</a></li>
+          <li><a href="{{ '/education/aio-framework/' | relative_url }}">AIO Framework</a></li>
+          <li><a href="{{ '/blog/' | relative_url }}">Blog</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-nav">
+        <h3 class="footer-heading">Company</h3>
+        <ul>
+          <li><a href="{{ '/about/' | relative_url }}">About</a></li>
+          <li><a href="{{ '/case-studies/' | relative_url }}">Case Studies</a></li>
+          <li><a href="{{ '/contact/' | relative_url }}">Contact</a></li>
+          <li><a href="{{ '/tools/' | relative_url }}">Tools</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}. All rights reserved.</p>
+      <nav class="footer-legal" aria-label="Legal links">
+        {% for link in site.data.navigation.footer %}
+        <a href="{{ link.url | relative_url }}">{{ link.title }}</a>
+        {% endfor %}
+      </nav>
+    </div>
+  </div>
+</footer>

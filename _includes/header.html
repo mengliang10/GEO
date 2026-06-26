@@ -1,0 +1,37 @@
+<header class="site-header" role="banner">
+  <div class="container">
+    <a class="site-logo" href="{{ '/' | relative_url }}" rel="home">
+      <span class="logo-icon">◆</span>
+      <span class="logo-text">{{ site.title }}</span>
+    </a>
+
+    <nav class="site-nav" role="navigation" aria-label="Main navigation">
+      <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="hamburger"></span>
+      </button>
+      <ul class="nav-list">
+        {% for link in site.data.navigation.main %}
+          {% if link.children %}
+          <li class="nav-item has-dropdown">
+            <a href="{{ link.url | relative_url }}" class="nav-link{% if page.url contains link.url %} active{% endif %}">
+              {{ link.title }}
+              <svg class="dropdown-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <ul class="dropdown">
+              {% for child in link.children %}
+              <li><a href="{{ child.url | relative_url }}">{{ child.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a href="{{ link.url | relative_url }}" class="nav-link{% if page.url == link.url %} active{% endif %}">{{ link.title }}</a>
+          </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
+</header>

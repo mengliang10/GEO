@@ -1,0 +1,78 @@
+---
+layout: default
+---
+<article class="post-article" itemscope itemtype="https://schema.org/Article">
+  <div class="container post-layout">
+    <div class="post-content">
+      <header class="post-header">
+        <div class="post-meta-top">
+          {% if page.categories %}
+          <span class="post-category">{{ page.categories | first }}</span>
+          {% endif %}
+          <time class="post-date" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+            {{ page.date | date: "%B %-d, %Y" }}
+          </time>
+          <span class="post-reading-time" data-read-time="{{ content | strip_html | number_of_words | divided_by: 200 | ceil }}"></span>
+        </div>
+        <h1 class="post-title" itemprop="headline">{{ page.title }}</h1>
+        {% if page.subtitle %}
+        <p class="post-subtitle">{{ page.subtitle }}</p>
+        {% endif %}
+        <div class="post-author">
+          <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+            <span itemprop="name">{{ page.author | default: site.author.name }}</span>
+          </span>
+        </div>
+      </header>
+
+      <div class="post-body prose" itemprop="articleBody">
+        {{ content }}
+      </div>
+
+      <footer class="post-footer">
+        {% if page.tags %}
+        <div class="post-tags">
+          <span>Tags:</span>
+          {% for tag in page.tags %}
+          <a href="{{ '/blog/' | relative_url }}?tag={{ tag | slugify }}" class="tag">{{ tag }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <nav class="post-nav" aria-label="Post navigation">
+          {% if page.previous %}
+          <a href="{{ page.previous.url | relative_url }}" class="post-nav-prev">
+            <span class="post-nav-label">← Previous</span>
+            <span class="post-nav-title">{{ page.previous.title }}</span>
+          </a>
+          {% endif %}
+          {% if page.next %}
+          <a href="{{ page.next.url | relative_url }}" class="post-nav-next">
+            <span class="post-nav-label">Next →</span>
+            <span class="post-nav-title">{{ page.next.title }}</span>
+          </a>
+          {% endif %}
+        </nav>
+      </footer>
+    </div>
+
+    <aside class="post-sidebar">
+      <div class="sidebar-widget">
+        <h3>Table of Contents</h3>
+        <div class="toc" id="toc"></div>
+      </div>
+      <div class="sidebar-widget">
+        <h3>Share This Article</h3>
+        <div class="share-links">
+          <a href="https://www.linkedin.com/share?url={{ site.url }}{{ site.baseurl }}{{ page.url | url_encode }}" target="_blank" rel="noopener" aria-label="Share on LinkedIn">LinkedIn</a>
+          <a href="https://twitter.com/intent/tweet?text={{ page.title | url_encode }}&url={{ site.url }}{{ site.baseurl }}{{ page.url | url_encode }}" target="_blank" rel="noopener" aria-label="Share on Twitter/X">X / Twitter</a>
+        </div>
+      </div>
+      <div class="sidebar-widget sidebar-cta">
+        <h3>Stay Ahead of the Curve</h3>
+        <p>Get our latest GEO/AEO/AIO insights delivered to your inbox.</p>
+        <a href="{{ '/contact/' | relative_url }}" class="btn btn-primary">Subscribe</a>
+      </div>
+    </aside>
+  </div>
+</article>
