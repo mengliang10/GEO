@@ -28,6 +28,18 @@ DBS PayLah! is a mobile payment and lifestyle platform that has evolved from a p
 
 **Graph analysis observation:** PayLah! has 23 distinct integration points with other DBS platforms and 8 external partner integrations.
 
+```cypher
+// Discover platform integration surface area
+MATCH (p:Platform {name: 'DBS PayLah!'})-[:INTEGRATES_WITH]->(target:Platform)
+OPTIONAL MATCH (p)-[:INTEGRATES_WITH]->(partner:ExternalPartner)
+RETURN p.name as platform,
+       count(DISTINCT target) as platformIntegrations,
+       count(DISTINCT partner) as externalIntegrations,
+       collect(DISTINCT target.name) as integratedPlatforms,
+       collect(DISTINCT partner.name) as externalPartners
+ORDER BY platformIntegrations DESC
+```
+
 ### DBS Remit — Cross-Border Payments Infrastructure
 
 DBS Remit provides international money transfer services with competitive FX rates and real-time tracking.
@@ -39,6 +51,16 @@ DBS Remit provides international money transfer services with competitive FX rat
 - Beneficiary account validation against 200+ country-specific formats
 
 ### DBS Token Services — Programmable Money Infrastructure
+
+```cypher
+// Map infrastructure dependency depth
+MATCH path = (ts:Platform {name: 'DBS Token Services'})-[:DEPENDS_ON*1..]->(layer)
+RETURN ts.name as platform,
+       layer.name as dependency,
+       layer.type as layerType,
+       length(path) as dependencyDepth
+ORDER BY dependencyDepth DESC
+```
 
 The most architecturally significant platform in DBS's portfolio, DBS Token Services provides blockchain-based tokenization infrastructure for:
 
@@ -106,6 +128,37 @@ Critical graph insights:
 - Dependency chain depth: Token Services depends on 7 infrastructure layers
 - Single point of failure: The identity service serves as a dependency for 18 platform components
 - Regulatory surface area: Token Services intersects with 8 of 12 regulatory frameworks
+```
+
+```cypher
+// Regulatory exposure by platform
+MATCH (p:Platform)-[:MUST_COMPLY_WITH]->(reg:RegulatoryObligation)
+RETURN p.name as platform,
+       count(reg) as regulatoryIntersections,
+       collect(reg.code) as frameworks
+ORDER BY regulatoryIntersections DESC
+```
+
+```cypher
+// Cross-platform customer entity resolution
+// Identify customers with accounts across multiple platforms
+MATCH (c:Customer)-[:HAS_ACCOUNT]->(a:Account)-[:BELONGS_TO]->(p:Platform)
+WHERE p.name IN ['DBS PayLah!', 'DBS Remit', 'DBS Token Services']
+WITH c, collect(DISTINCT p.name) as platforms, count(a) as totalAccounts
+WHERE size(platforms) > 1
+RETURN c.customerId, platforms, totalAccounts
+ORDER BY totalAccounts DESC
+LIMIT 20
+```
+
+```cypher
+// Single point of failure analysis
+// Identity service serves 18 platform components
+MATCH (identity:Service {name: 'Identity Service'})<-[r:DEPENDS_ON]-(component)
+RETURN component.type as componentType,
+       count(component) as dependentCount,
+       collect(component.name) as components
+ORDER BY dependentCount DESC
 ```
 
 ## Measurable Outcomes
