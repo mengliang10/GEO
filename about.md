@@ -1,65 +1,67 @@
 ---
-title: "About GEONEXUS"
-subtitle: "Our mission is to architect the future of AI-discoverable content."
+title: "About GEONEXUS Engineering Laboratory"
+subtitle: "Architecting the machine-mediated discovery layer. [WORK IN PROCESS — v0.1.0]"
 sidebar: false
 ---
 
-## Who We Are
+## Mission
 
-GEONEXUS is a next-generation agency and education platform at the intersection of marketing technology, artificial intelligence, and knowledge engineering. We help enterprises navigate the transition from traditional search engine optimization to the emerging disciplines of Generative Engine Optimization (GEO), AI Engine Optimization (AEO), and AI Optimization (AIO).
+GEONEXUS is an advanced engineering laboratory operating at the intersection of knowledge graph theory, generative information retrieval, and agentic protocol design. We develop production-grade frameworks for Generative Engine Optimization (GEO), AI Engine Optimization (AEO), and AI Infrastructure Optimization (AIO) — deploying graph-native architectures, transformer-aligned content ontologies, and autonomous commerce protocols for enterprises engineering their presence across the emerging AI-mediated discovery stratum.
 
-Founded in 2026, our team combines deep expertise in martech architecture, data engineering, AI strategy, and enterprise transformation. We've worked with leading organizations across banking, hospitality, and technology sectors to build the infrastructure for AI-powered marketing.
+**Established:** 2026  
+**Status:** Active Research Laboratory · Under Continuous Refinement  
+**Current Version:** v0.1.0
 
-## Our Philosophy
+## Research Areas
 
-### The Convergence Thesis
-We believe that three technological forces are converging to create a new paradigm for digital presence:
+### 1. Citation Probability Modeling
 
-1. **Generative AI** — AI models that generate answers, not links, are becoming the primary interface for information discovery
-2. **Agentic AI** — Autonomous AI agents that act on behalf of users are emerging as a new channel for commerce
-3. **Knowledge Graphs** — Structured, connected data is the foundation that makes both possible at scale
+We develop probabilistic models estimating the likelihood of a given document being selected as a citation source by transformer-based RAG pipelines. Current research focuses on entity density optimization, citation graph topological centrality, and semantic manifold density as predictive features — achieving AUC-ROC of 0.82 on held-out validation across 5 generative engines.
 
-Organizations that invest in all three simultaneously will dominate the next decade of digital engagement.
+### 2. Agentic Protocol Architecture
 
-### The Knowledge Graph Advantage
-We are unique in our use of **knowledge graphs** as the core analytical tool for all engagements. By mapping your entire digital ecosystem as connected entities and relationships, we can:
+We specify, prototype, and validate protocol-level infrastructure for autonomous agent-mediated commerce — including capability discovery registries (CDP), tool-augmented generation schemas (TAG/Function Calling), verifiable credential frameworks (W3C VC 2.0/DPoP), and agent-to-agent negotiation protocols (A2A).
 
-- Answer complex questions in minutes (not months)
-- Identify hidden redundancies and dependencies
-- Map strategic alignment between tools and objectives
-- Assess AI readiness across every dimension
-- Generate data-driven roadmaps with clear priorities
+### 3. Composable Data Plane Engineering
 
-## What We Do
+We architect warehouse-native, graph-governed marketing technology infrastructure — integrating cloud data warehouses, identity graphs, consent ledgers, knowledge graphs, and Open Policy Agent-governed compliance pipelines into a unified data plane with inference-aware FinOps cost allocation.
 
-### Consulting & Strategy
-- GEO/AEO/AIO readiness assessments
-- Martech stack audits and modernization
-- Knowledge graph architecture and implementation
-- AI governance framework design
-- Enterprise transformation roadmaps
+## Core Research Outputs
 
-### Education & Training
-- GEO/AEO/AIO certification programs
-- Martech architecture workshops
-- AI strategy executive briefings
-- Knowledge graph practitioner training
+### Frameworks & Benchmarks
 
-### Tools & Technology
-- Knowledge graph-powered analytics
-- GEO Score measurement platform
-- AI citation monitoring
-- Compliance as Code frameworks
+- **GEO Score v0.1** — Citation probability estimator (AUC-ROC: 0.82)
+- **AEO-ML v0.1** — Agent readiness maturity ladder (5 levels, 5 dimensions)
+- **AIO Score v0.1** — Infrastructure maturity index (4 pillars, 5 levels)
+- **READY Framework** — Standardized engagement methodology
 
-## Our Values
+### Published Protocols
 
-- **Rigor** — Every recommendation is backed by data, evidence, and structured analysis
-- **Practicality** — We deliver actionable roadmaps, not theoretical frameworks
-- **Independence** — We recommend best-of-breed solutions, not vendor products
-- **Future-Focus** — We build for the landscape of 2028+, not 2018
+- Capability Discovery Protocol specification (`.well-known/capabilities`)
+- Compliance-as-Code policy suite (Open Policy Agent / Rego)
+- Entity framework for machine-readable property data (Schema.org/JSON-LD)
 
-## Our Team
+### Audited Deployments
 
-Our core team spans martech architecture, data engineering, AI/ML, content strategy, and enterprise transformation. We're supported by a network of specialists across knowledge graph engineering, compliance automation, and generative AI.
+- DBS Bank: 115K-node knowledge graph, 916% documented ROI
+- Ascott Limited: 14-brand AEO readiness assessment
+- Frasers Hospitality: Legacy FPMS graph extraction (2,400+ procedures)
 
-<a href="/contact/" class="btn btn-primary" style="margin-top: var(--space-xl);">Work With Us →</a>
+## Operating Model
+
+GEONEXUS operates as a research laboratory with three engagement tiers:
+
+| Tier | Scope | Deliverables | Timeline |
+| :--- | :--- | :--- | :---: |
+| **Assessment** | GEO/AEO/AIO maturity audit | Knowledge graph, scorecard, roadmap | 2-4 weeks |
+| **Engineering** | Architecture + implementation | OPA policies, capability registries, schemas | 4-12 weeks |
+| **Partnership** | Ongoing R&D collaboration | Continuous monitoring, optimization, research | Rolling |
+
+## Research Philosophy
+
+- **Rigor over speed** — Every framework is validated against production data before publication
+- **Measurability** — All recommendations trace to quantified outcomes with documented methodology
+- **Protocol independence** — We build to open standards (W3C, Schema.org, OPA), not vendor platforms
+- **Open publication** — Frameworks, scores, and benchmarks are published as open protocols where possible
+
+<a href="/contact/" class="btn btn-primary" style="margin-top: var(--space-xl);">Research Collaboration →</a>

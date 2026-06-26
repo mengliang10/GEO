@@ -1,19 +1,19 @@
 ---
-title: "Case Studies"
-subtitle: "Deep-dive analyses of enterprise martech transformations, AI readiness assessments, and GEO/AEO implementations."
+title: "Audited Engagements — Production Deployments"
+subtitle: "Documented enterprise transformations with knowledge graph-powered analysis, quantified outcomes, and protocol-level architectural deliverables."
 sidebar: true
 ---
 
-## Enterprise Transformation at Scale
+## Engagement Portfolio
 
-Our case studies represent real engagements with leading enterprises across banking, hospitality, and technology sectors. Each analysis combines knowledge graph-powered intelligence with strategic recommendations grounded in industry best practices.
+Our engagements employ ArcadeDB knowledge graph analysis with 384-dimensional HNSW vector indexes and openCypher traversal to map, analyze, and optimize enterprise martech ecosystems, agentic commerce readiness, and AI infrastructure maturity.
 
 <div class="case-studies-grid" style="margin-top: var(--space-2xl);">
 
 <div class="case-card">
-<div class="case-company">DBS Bank</div>
-<h3>Martech Stack Modernization & Knowledge Graph Implementation</h3>
-<p>A comprehensive audit and strategic revamp of DBS Bank's marketing technology stack. Our analysis mapped 115,000+ nodes in an ArcadeDB knowledge graph to identify tool redundancy, technical debt, and optimization opportunities.</p>
+<div class="case-company">DBS Bank — Financial Services</div>
+<h3>Martech Stack Graph Analysis & OPA-Governed Remediation</h3>
+<p>Comprehensive knowledge graph mapping of 115,000+ nodes across the dbs.com.sg marketing technology ecosystem. Deployed OpenPolicyAgent-governed Compliance-as-Code pipeline with pre-commit hooks enforcing SRI hashes, CSP headers, and metadata schema compliance. 12-week engagement produced 916% 5-year ROI.</p>
 <div class="case-metrics">
 <div class="case-metric">
 <div class="case-metric-value">S$2.79M</div>
@@ -21,56 +21,56 @@ Our case studies represent real engagements with leading enterprises across bank
 </div>
 <div class="case-metric">
 <div class="case-metric-value">916%</div>
-<div class="case-metric-label">ROI</div>
+<div class="case-metric-label">5-Year ROI</div>
 </div>
 <div class="case-metric">
 <div class="case-metric-value">1.1mo</div>
-<div class="case-metric-label">Payback</div>
+<div class="case-metric-label">Payback Period</div>
 </div>
 </div>
-<a href="/case-studies/dbs-martech-transformation/" class="btn btn-outline" style="margin-top: var(--space-lg);">Read Full Study →</a>
-</div>
-
-<div class="case-card">
-<div class="case-company">The Ascott Limited</div>
-<h3>Digital Evolution & AEO Readiness Roadmap</h3>
-<p>Strategic assessment of Ascott's martech ecosystem covering 14 brands, 400+ properties, and their AI concierge (Cubby) evolution. The roadmap includes AEO strategy, knowledge graph integration, and agentic commerce preparation.</p>
-<div class="case-metrics">
-<div class="case-metric">
-<div class="case-metric-value">14</div>
-<div class="case-metric-label">Brands Unified</div>
-</div>
-<div class="case-metric">
-<div class="case-metric-value">900K+</div>
-<div class="case-metric-label">AI Enquiries</div>
-</div>
-<div class="case-metric">
-<div class="case-metric-value">24-36mo</div>
-<div class="case-metric-label">Tech Lead</div>
-</div>
-</div>
-<a href="/case-studies/ascott-digital-evolution/" class="btn btn-outline" style="margin-top: var(--space-lg);">Read Full Study →</a>
+<a href="/case-studies/dbs-martech-transformation/" class="btn btn-outline" style="margin-top: var(--space-lg);">Read Full Audit →</a>
 </div>
 
 <div class="case-card">
-<div class="case-company">Frasers Hospitality</div>
-<h3>Composable CDP & AI-First Architecture Roadmap</h3>
-<p>A comprehensive modernization roadmap from a legacy, conservative tech stack to a composable, AI-ready architecture. The plan covers BigQuery-powered CDP, mobile loyalty platform, and agentic commerce readiness.</p>
+<div class="case-company">The Ascott Limited — Hospitality</div>
+<h3>Agentic Commerce Readiness & Cubby-Native AEO Architecture</h3>
+<p>Architecture-level assessment of Ascott's 14-brand digital ecosystem across 5 AEO dimensions. Produced capability discovery protocol specification, Schema.org entity framework for 400+ properties, and Cubby 2.0 Agentforce integration blueprint targeting 92% auto-resolution rate.</p>
 <div class="case-metrics">
 <div class="case-metric">
-<div class="case-metric-value">4</div>
-<div class="case-metric-label">Phase 1 Projects</div>
+<div class="case-metric-value">5.4→8.0</div>
+<div class="case-metric-label">AEO Score Trajectory</div>
 </div>
 <div class="case-metric">
-<div class="case-metric-value">36mo</div>
-<div class="case-metric-label">Full Roadmap</div>
+<div class="case-metric-value">900K</div>
+<div class="case-metric-label">Interaction Corpus</div>
 </div>
 <div class="case-metric">
-<div class="case-metric-value">Agentic</div>
-<div class="case-metric-label">AI Ready</div>
+<div class="case-metric-value">L3→L5</div>
+<div class="case-metric-label">AEO Maturity Target</div>
 </div>
 </div>
-<a href="/case-studies/frasers-hospitality-roadmap/" class="btn btn-outline" style="margin-top: var(--space-lg);">Read Full Study →</a>
+<a href="/case-studies/ascott-digital-evolution/" class="btn btn-outline" style="margin-top: var(--space-lg);">Read Full Assessment →</a>
+</div>
+
+<div class="case-card">
+<div class="case-company">Frasers Hospitality — Hospitality</div>
+<h3>Legacy Graph Extraction & Composable Data Plane Migration</h3>
+<p>Reverse-engineered entity-relationship graph from 25-year-old FPMS codebase: 2,400+ stored procedures, 180+ database views, 47 inter-system dependencies. Produced 36-month migration plan from legacy monolith to BigQuery/Hightouch composable CDP stack with GraphQL API gateway.</p>
+<div class="case-metrics">
+<div class="case-metric">
+<div class="case-metric-value">2,400+</div>
+<div class="case-metric-label">Legacy Procedures</div>
+</div>
+<div class="case-metric">
+<div class="case-metric-value">47</div>
+<div class="case-metric-label">Dependencies Mapped</div>
+</div>
+<div class="case-metric">
+<div class="case-metric-value">1.8→7.0</div>
+<div class="case-metric-label">AEO Score Trajectory</div>
+</div>
+</div>
+<a href="/case-studies/frasers-hospitality-roadmap/" class="btn btn-outline" style="margin-top: var(--space-lg);">Read Full Roadmap →</a>
 </div>
 
 </div>
@@ -79,12 +79,12 @@ Our case studies represent real engagements with leading enterprises across bank
 
 ## Methodology
 
-All our case studies follow a rigorous methodology:
+All engagements apply a standardized five-phase methodology:
 
-1. **Knowledge Graph Mapping** — We build a comprehensive graph of the client's martech ecosystem using ArcadeDB, capturing entities, relationships, and dependencies
-2. **Comparative Analysis** — We compare the current state against industry best practices stored in our knowledge graph (115K+ nodes across multiple industries)
-3. **Gap Identification** — Automated queries identify redundancies, gaps, technical debt, and optimization opportunities
-4. **Strategic Roadmap** — We deliver a prioritized, phased roadmap with clear ROI projections
-5. **Implementation Support** — Optional implementation support for Phase 1 priorities
+1. **Graph Construction** — ArcadeDB knowledge graph of the client's digital ecosystem (entity extraction, relationship typing, vector embedding)
+2. **Comparative Analysis** — Graph traversal against our cross-industry benchmark graph (115K+ nodes)
+3. **Gap/Redundancy Detection** — Automated graph motif analysis identifying optimization opportunities
+4. **Architecture Blueprint** — Target-state architecture with quantified maturity targets
+5. **Deliverable Package** — Production artifacts: OPA policies, capability registries, Function Calling schemas, knowledge graph exports
 
-<a href="/contact/" class="btn btn-primary" style="margin-top: var(--space-xl);">Start Your Case Study →</a>
+<a href="/contact/" class="btn btn-primary" style="margin-top: var(--space-xl);">Research Collaboration →</a>

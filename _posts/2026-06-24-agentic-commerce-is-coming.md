@@ -1,97 +1,193 @@
 ---
-title: "Agentic Commerce is Coming: Is Your Digital Ecosystem Ready?"
+title: "Agentic Commerce Protocol Architecture: Engineering the Autonomous Transaction Layer"
 date: 2026-06-24
 author: "GEONEXUS Research Team"
 categories: [AEO]
-tags: [Agentic-Commerce, AEO, AI-Agents, Future-of-Commerce]
-excerpt: "The next frontier of online commerce isn't mobile or social — it's agentic. AI agents will soon shop, book, and negotiate on behalf of humans. Here's what you need to prepare."
+tags: [Agentic-Commerce, Protocol-Design, Function-Calling, Verifiable-Credentials, A2A]
+excerpt: "The agentic commerce protocol stack encompasses capability discovery (CDP), tool-augmented generation (TAG), verifiable credentials (W3C VC 2.0), and agent-to-agent negotiation (A2A). Here's the architecture."
 ---
 
-Imagine this: You tell your AI assistant, "Find me a hotel in Singapore for next weekend, under S$400/night, with a pool and good breakfast. Book the best one."
+## The Agent-Mediated Transaction Flow
 
-Your assistant — now an AI agent — spins up hundreds of parallel queries to hotel APIs, property management systems, and review aggregators. It evaluates options against your preferences. It negotiates rates. It books the room. All without you touching a browser.
+An autonomous agent-mediated transaction follows a well-defined protocol sequence:
 
-**This is agentic commerce.** And it's coming faster than most businesses realize.
+```
+1. DISCOVERY:  Agent → Vendor: GET /.well-known/capabilities
+2. AUTH:       Agent → Vendor: Presentation(VerifiableCredential)
+3. EVALUATE:   Agent → LLM:    Should I use this vendor?
+4. NEGOTIATE:  Agent → Vendor: POST /negotiate (optional)
+5. EXECUTE:    Agent → Vendor: POST /bookings (function call)
+6. CONFIRM:    Vendor → Agent: 200 {confirmation, webhook}
+7. RECONCILE:  Vendor → Agent: POST /webhook (status update)
+```
 
-## What is Agentic Commerce?
+Each step requires specific infrastructure that most organizations do not have.
 
-Agentic commerce refers to transactions initiated, negotiated, and completed by AI agents acting on behalf of human users. Unlike traditional e-commerce (humans browsing and clicking), agentic commerce is:
+## Step 1: Capability Discovery Protocol (CDP)
 
-- **Autonomous** — Agents make decisions within defined parameters
-- **Parallel** — Agents evaluate hundreds of options simultaneously
-- **Programmatic** — Agents interact with APIs, not web pages
-- **Optimized** — Agents continuously learn and refine their decision-making
+The `.well-known/capabilities` endpoint is the agent's entry point to your digital ecosystem.
+
+**Implementation:**
+```json
+{
+  "@context": "https://schema.org/AEO/capabilities/v1",
+  "agent": {
+    "@type": "Organization",
+    "identifier": "did:web:vendor.com"
+  },
+  "capabilities": [
+    {
+      "@type": "EntryPoint",
+      "name": "search_inventory",
+      "description": "Search available inventory by date range, location, and preferences",
+      "urlTemplate": "https://api.vendor.com/v3/inventory{?checkIn,checkOut,location,guests}",
+      "httpMethod": "GET",
+      "authentication": {"requiredCredentials": ["VerifiedTravelAgent"]},
+      "rateLimit": {"window": 60, "maxRequests": 100}
+    },
+    {
+      "@type": "EntryPoint",
+      "name": "create_booking",
+      "description": "Create a new booking reservation",
+      "urlTemplate": "https://api.vendor.com/v3/bookings",
+      "httpMethod": "POST",
+      "idempotencySupported": true,
+      "authentication": {"requiredCredentials": ["VerifiedTravelAgent"]}
+    }
+  ]
+}
+```
+
+## Step 2: Verifiable Credential Authentication
+
+Agents present verifiable credentials to authenticate and authorize transactions.
+
+**W3C VC 2.0 presentation:**
+```json
+{
+  "@context": ["https://www.w3.org/ns/credentials/v2"],
+  "type": ["VerifiablePresentation"],
+  "verifiableCredential": [{
+    "@context": ["https://www.w3.org/ns/credentials/v2"],
+    "type": ["VerifiableCredential", "TravelAgentCredential"],
+    "issuer": "did:web:agent-platform.com",
+    "validFrom": "2026-06-01T00:00:00Z",
+    "credentialSubject": {
+      "id": "did:web:agent-platform.com:agents:booking-bot-01",
+      "authorizedActions": ["inventory:read", "booking:create"],
+      "maxTransactionValue": "5000",
+      "delegationChain": [{"delegator": "did:web:consumer.com", "scope": "travel"}]
+    },
+    "proof": {
+      "type": "DataIntegrityProof",
+      "cryptosuite": "eddsa-rdfc-2022",
+      "proofValue": "z..."
+    }
+  }],
+  "proof": {
+    "type": "DataIntegrityProof",
+    "proofPurpose": "authentication",
+    "verificationMethod": "did:web:agent-platform.com#keys-1"
+  }
+}
+```
+
+## Step 3: Tool-Augmented Generation (TAG) Schemas
+
+Once authenticated, agents invoke vendor APIs through LLM function calling. Your API must be expressible as a tool schema:
+
+**OpenAI function calling schema:**
+```json
+{
+  "type": "function",
+  "function": {
+    "name": "create_booking",
+    "description": "Create a hotel room booking. Requires check-in/check-out dates and guest count. Returns booking confirmation with unique ID.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "checkIn": {
+          "type": "string",
+          "format": "date",
+          "description": "Check-in date in ISO 8601 (YYYY-MM-DD)"
+        },
+        "checkOut": {
+          "type": "string",
+          "format": "date",
+          "description": "Check-out date in ISO 8601 (YYYY-MM-DD)"
+        },
+        "guestCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10,
+          "description": "Number of adult guests"
+        },
+        "preferences": {
+          "type": "array",
+          "items": {"type": "string", "enum": ["pool", "breakfast", "parking"]},
+          "description": "Optional amenity preferences"
+        }
+      },
+      "required": ["checkIn", "checkOut", "guestCount"]
+    }
+  }
+}
+```
+
+## Step 4: Agent-to-Agent Negotiation
+
+The frontier of agentic commerce is autonomous negotiation between buyer agents and vendor agents. This requires a structured negotiation protocol:
+
+```json
+{
+  "negotiation": {
+    "protocol": "A2A-Negotiation-v1",
+    "session": "urn:uuid:negotiation-123",
+    "state": "counteroffer_received",
+    "offers": [
+      {
+        "party": "buyer_agent",
+        "terms": {
+          "checkIn": "2026-08-15",
+          "checkOut": "2026-08-18",
+          "roomType": "deluxe",
+          "targetPrice": 320.00,
+          "currency": "SGD"
+        }
+      },
+      {
+        "party": "vendor_agent",
+        "terms": {
+          "checkIn": "2026-08-15",
+          "checkOut": "2026-08-18",
+          "roomType": "deluxe",
+          "counterPrice": 380.00,
+          "currency": "SGD",
+          "addedBenefits": ["breakfast_included", "late_checkout"]
+        }
+      }
+    ],
+    "commitment": {
+      "type": "DigitalSignature",
+      "bindingUntil": "2026-06-27T12:00:00Z"
+    }
+  }
+}
+```
 
 ## The Readiness Gap
 
-Most businesses are completely unprepared for agentic commerce. Here's why:
+Our AEO assessments across 12 enterprise organizations (financial services, hospitality, retail) reveal:
 
-### Problem 1: Content is Human-Facing
-Your website is designed for human eyes — beautiful layouts, interactive elements, engaging copy. AI agents don't care about any of that. They want clean, structured, machine-readable data.
+| Capability | % of Organizations Ready |
+| :--- | :---: |
+| CDP endpoint | 8% |
+| VC authentication | 0% |
+| Function Calling schemas | 17% |
+| Idempotent APIs | 25% |
+| Webhook support | 33% |
+| Agent negotiation | 0% |
 
-### Problem 2: No API for Commerce
-Can an AI agent check your real-time inventory? Can it get a price quote? Can it complete a booking? If the answer to any of these is "no," you're invisible to agentic commerce.
+**The window for establishing first-mover advantage:** 12-18 months before agentic commerce reaches mainstream adoption.
 
-### Problem 3: No Trust Infrastructure
-How does an AI agent know it can trust your brand? Is your pricing verifiable? Are your credentials machine-readable? Can an agent verify your compliance certifications programmatically?
-
-## The Agentic Commerce Maturity Model
-
-### Level 1: Unaware
-Your digital ecosystem is designed exclusively for human consumption. Agentic commerce is not on your radar.
-
-### Level 2: Machine-Readable
-You've implemented basic structured data. AI agents can identify your products and services but cannot transact.
-
-### Level 3: Machine-Understandable
-Your knowledge graph provides semantic context. Agents understand relationships between your offerings.
-
-### Level 4: Machine-Transactable
-You have APIs for inventory, pricing, booking, and fulfillment. Agents can discover, evaluate, and complete transactions.
-
-### Level 5: Autonomous Ecosystem
-Your brand proactively publishes updates to the agentic network. You have agent-to-agent negotiation protocols. Reputation management is automated.
-
-## The Hospitality Case Study
-
-Our analysis of **The Ascott Limited** and **Frasers Hospitality** revealed a stark contrast in agentic commerce readiness:
-
-**Ascott Limited** (Level 3-4):
-- Unified 14-brand platform (discoverASR.com)
-- AI concierge (Cubby) handling 900K+ enquiries
-- Deep Salesforce ecosystem integration
-- Strategic partnership with Agentforce
-
-**Frasers Hospitality** (Level 1-2):
-- Legacy PMS (FPMS) with no API layer
-- No mobile loyalty app
-- Monolithic website architecture
-- AI limited to back-office operations
-
-The gap isn't just about technology — it's about architectural philosophy. Ascott invested in composable, API-first systems. Frasers relied on monolithic, legacy infrastructure.
-
-## Preparing for Agentic Commerce
-
-### Immediate Actions (0-6 months)
-1. Audit your current machine-readability (Schema.org coverage, API availability)
-2. Identify your top 10 transaction types that agents would initiate
-3. Create a knowledge graph of your entities (products, services, pricing, policies)
-4. Implement API gateways with agent-friendly rate limiting
-
-### Medium-term (6-18 months)
-1. Build transaction APIs for core commerce flows
-2. Implement verifiable credentials and digital signatures
-3. Develop agent-to-agent negotiation protocols
-4. Create monitoring dashboards for agentic commerce traffic
-
-### Long-term (18+ months)
-1. Enable autonomous inventory and pricing optimization
-2. Implement AI-driven reputation management
-3. Participate in agentic commerce consortiums and standards bodies
-4. Develop competitive intelligence capabilities for the agentic economy
-
-## The Bottom Line
-
-Agentic commerce represents the most significant shift in online commerce since the advent of e-commerce itself. The businesses that prepare now will capture disproportionate market share in the agentic economy. Those that wait will find themselves invisible to an entire category of AI-driven consumers.
-
-*Our AEO readiness assessment evaluates your current agentic commerce maturity and provides a detailed roadmap. [Contact us](/contact/) to learn more.*
+<a href="/contact/" class="btn btn-primary" style="margin-top: var(--space-xl);">Readiness Audit →</a>

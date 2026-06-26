@@ -1,89 +1,71 @@
 ---
-title: "Services"
-subtitle: "Comprehensive GEO, AEO, and AIO solutions for enterprises ready to lead in the age of AI-driven discovery."
+title: "Services — Engineering Laboratory"
+subtitle: "Production-grade GEO, AEO, and AIO frameworks for enterprises architecting their presence across the machine-mediated discovery layer."
 sidebar: true
 ---
 
-## What We Offer
+## Service Architecture
 
-The digital landscape has fundamentally shifted. AI-powered search engines, agentic commerce, and LLM-driven discovery now control how customers find, evaluate, and choose your brand. GEONEXUS provides the strategy, architecture, and execution to ensure you're not just visible — you're the default answer.
+The GEONEXUS engineering lab delivers three integrated service lines, each targeting a distinct layer of the AI-mediated discovery and transaction stack.
 
-### Our Service Pillars
+### The Three Stack Layers
 
-<div class="services-grid" style="margin-top: var(--space-xl);">
+**🌐 Generative Engine Optimization (GEO)** targets the **inference-time citation surface** — engineering entity-dense content ontologies, Schema.org-compliant knowledge organization systems, and retrieval-aligned topical authority models that maximize citation probability within transformer-based RAG pipelines.
 
-<div class="service-card">
+[Explore GEO Framework →](/services/geo-optimization/)
 
-#### 🌐 Generative Engine Optimization (GEO)
+**🤖 AI Engine Optimization (AEO)** targets the **autonomous action layer** — architecting capability discovery protocols, verifiable credential infrastructure, function-calling-compatible API surfaces, and agent-to-agent negotiation frameworks that enable LLM-invoked agents to autonomously discover, evaluate, and transact with vendor systems.
 
-Optimize for AI search engines — ChatGPT, Perplexity, Claude, Google Gemini, and emerging platforms.
+[Explore AEO Protocol Stack →](/services/aeo-optimization/)
 
-**Key capabilities:**
-- Entity-based content architecture
-- Structured data and schema.org implementation
-- Topical authority modeling and pillar-cluster strategies
-- AI-friendly content formatting and citation optimization
-- E-E-A-T signal amplification
+**🧠 AI Infrastructure Optimization (AIO)** targets the **organizational decision surface** — engineering warehouse-native composable data planes, graph-native metadata catalogs, Open Policy Agent-governed compliance pipelines, and inference-aware FinOps frameworks that enable enterprises to deploy, measure, and govern AI-mediated marketing operations at production scale.
 
-[Learn more about GEO →](/services/geo-optimization/)
-
-</div>
-
-<div class="service-card">
-
-#### 🤖 AI Engine Optimization (AEO)
-
-Prepare your digital ecosystem for agentic AI commerce and machine-to-machine discovery.
-
-**Key capabilities:**
-- Knowledge graph architecture and implementation
-- JSON-LD / Schema.org optimization at scale
-- API-first content delivery for AI consumption
-- LLM training data readiness audits
-- Agentic commerce enablement
-
-[Learn more about AEO →](/services/aeo-optimization/)
-
-</div>
-
-<div class="service-card">
-
-#### 🧠 AI Optimization Strategy (AIO)
-
-End-to-end AI readiness for your martech stack, data infrastructure, and governance frameworks.
-
-**Key capabilities:**
-- Composable CDP architecture
-- AI governance and compliance frameworks
-- Predictive analytics and decisioning engines
-- Martech stack consolidation and modernization
-- AI ethics and responsible AI implementation
-
-[Learn more about AIO →](/services/aio-strategy/)
-
-</div>
-
-</div>
+[Explore AIO Architecture →](/services/aio-strategy/)
 
 ---
 
-## Our Approach
+## Engagement Model
 
-Every engagement follows our proven **READY framework**:
+### Assessment Phase (2-4 weeks)
 
-1. **Research** — Deep audit of your current AI discoverability, martech stack, and competitive landscape
-2. **Engineer** — Architectural design of your GEO/AEO/AIO infrastructure, including knowledge graphs, structured data, and content models
-3. **Activate** — Implementation across your digital ecosystem with CI/CD integration
-4. **Deploy** — Launch with monitoring, measurement, and optimization loops
-5. **Yield** — Continuous improvement through AI performance analytics and iterative refinement
+Comprehensive analysis of your current AI discoverability, martech stack topology, and competitive positioning — producing a knowledge graph-powered audit with quantified maturity scores across all three dimensions.
+
+**Deliverables:**
+- ArcadeDB knowledge graph of your digital ecosystem
+- GEO Score (citation probability estimate)
+- AEO Maturity Index (agent commerce readiness)
+- AIO Infrastructure Score (data plane maturity)
+- Prioritized remediation roadmap with ROI projections
+
+### Engineering Phase (4-12 weeks)
+
+Architecture design and implementation of the target-state GEO/AEO/AIO infrastructure, including knowledge graph deployment, capability registry implementation, OPA governance pipeline, and schema.org/JSON-LD entity framework.
+
+**Deliverables:**
+- Production knowledge graph (ArcadeDB or comparable)
+- Capability discovery endpoint (`.well-known/capabilities`)
+- Open Policy Agent governance rule set
+- Schema.org entity framework with validation
+- Function-calling compatible API schemas
+
+### Optimization Phase (ongoing)
+
+Continuous monitoring, measurement, and iterative refinement of GEO/AEO/AIO performance against defined benchmarks and competitive baselines.
+
+**Deliverables:**
+- Monthly GEO Score tracking
+- Agent commerce readiness monitoring
+- Citation rate analysis across 5+ generative engines
+- Competitive intelligence updates
+- Quarterly architecture review and roadmap refresh
 
 ---
 
 ## Why GEONEXUS?
 
-- **Enterprise-Grade Methodology** — Our frameworks are built from real transformations at DBS Bank, Ascott Limited, and Frasers Hospitality
-- **Knowledge Graph Native** — We leverage ArcadeDB-powered knowledge graphs to map, validate, and optimize your entire digital ecosystem
-- **Research-Backed** — Every recommendation is grounded in data, competitive intelligence, and industry best practices
-- **Future-Proof** — Our architecture anticipates the evolution of AI discovery, agentic commerce, and LLM-native search
+- **Graph-native methodology** — All analysis and recommendations are grounded in ArcadeDB-powered knowledge graphs with 115K+ nodes of cross-industry intelligence
+- **Production benchmarks** — Frameworks, scores, and maturity models are calibrated against real enterprise deployments (DBS Bank, Ascott Limited, Frasers Hospitality)
+- **Research-backe**d — Every recommendation traces to measurable outcomes with documented ROI (916% documented, 1.1-month payback)
+- **Protocol-first approach** — We don't just advise — we ship capability registries, OPA policies, and Function Calling schemas that integrate directly into your CI/CD pipeline
 
-<a href="/contact/" class="btn btn-primary" style="margin-top: var(--space-xl);">Book a Strategy Session</a>
+<a href="/contact/" class="btn btn-primary" style="margin-top: var(--space-xl);">Research Collaboration →</a>

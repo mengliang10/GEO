@@ -109,6 +109,67 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.25; color: var(--color-brand); font-weig
   padding: 0 var(--space-xl);
 }
 
+/* ─── WIP Banner ──────────────────────────────────────────────────────────── */
+.wip-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #ff6b35, #f7c948, #ff6b35);
+  background-size: 200% 200%;
+  animation: wipShimmer 4s ease-in-out infinite;
+  color: #1a1a2e;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 101;
+}
+
+@keyframes wipShimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.wip-icon {
+  font-size: 1rem;
+  animation: wipPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes wipPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.7; }
+}
+
+.wip-text {
+  text-align: center;
+}
+
+.wip-version {
+  display: inline-block;
+  padding: 2px 8px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+
+@media (max-width: 768px) {
+  .wip-banner {
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 6px 12px;
+    font-size: 0.65rem;
+  }
+  .wip-text {
+    width: 100%;
+    text-align: center;
+  }
+}
+
 /* ─── Header ───────────────────────────────────────────────────────────────── */
 .site-header {
   position: sticky;

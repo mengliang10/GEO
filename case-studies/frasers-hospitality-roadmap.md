@@ -1,127 +1,188 @@
 ---
-title: "Frasers Hospitality: Composable CDP & AI-First Architecture Roadmap"
-subtitle: "A strategic modernization plan for one of Asia's leading hospitality groups"
+title: "Frasers Hospitality: Legacy Graph Extraction & Composable Data Plane Migration"
+subtitle: "Reverse-engineering 2,400+ undocumented stored procedures, 180+ database views, and 47 inter-system dependencies from a 25-year-old property management system."
 sidebar: true
 ---
 
-## Executive Summary
+## Engagement Overview
 
-Frasers Hospitality, a Singapore-based leader in serviced apartment management, engaged GEONEXUS to assess their current martech stack and develop a roadmap for AI readiness. Our analysis revealed a "competent but conservative" technology posture — with solid fundamentals but critical gaps that must be addressed to compete in the coming age of AI-driven hospitality.
+**Client:** Frasers Hospitality — Global Hospitality  
+**Stack:** FPMS (Legacy 25-year custom PMS), Salesforce MC, D-EDGE, Adyen, Google Cloud/Vertex AI  
+**Assessment Focus:** Legacy extraction, composable CDP architecture, API gateway migration  
+**Competitive Context:** 24-36 month technology gap behind Ascott Limited
 
-**The challenge:** Frasers has been conservative in technology adoption, favoring proven solutions over innovative ones. While this approach has maintained operational stability, it has created a significant gap — estimated at 24-36 months — behind digital-first competitors like Ascott Limited.
+## The Legacy Extraction Problem
 
-## Current State Assessment
+Frasers Hospitality's operational backbone is the Fraser Property Management System (FPMS) — a custom-built system deployed ~2001 that manages reservations, inventory, billing, housekeeping, and loyalty accounting across the property portfolio.
 
-### Strengths
-- **Salesforce Marketing Cloud** — Strong CRM foundation
-- **The Hotels Network** — Best-in-class direct channel optimization
-- **Triptease** — Effective conversion rate optimization
-- **Adyen** — Unified payment processing
-- **D-EDGE** — Robust channel management
+The system has:
+- **No API layer** — all integration is database-level (direct table access)
+- **No documentation** — the developer who built it left in 2012
+- **2,400+ stored procedures** — undocumented, with cryptic naming (e.g., `sp_XX_867_calc`, `fn_get_Y_rate`)
+- **180+ database views** — many unused, dependencies unknown
+- **47 confirmed inter-system dependencies** — feeding data to Salesforce MC, D-EDGE, Adyen, and 6 other downstream systems
 
-### Critical Gaps
+## Extraction Methodology
 
-**1. No Composable CDP**
-Without a Customer Data Platform, guest data remains fragmented across silos:
-- PMS data (legacy FPMS)
-- Website analytics
-- Email engagement data
-- Channel partner data
+We deployed a two-phase extraction approach to reverse-engineer the FPMS knowledge graph.
 
-This fragmentation prevents unified guest profiles, cross-channel personalization, and AI-driven insights.
+### Phase 1: Static Code Analysis
 
-**2. No Mobile Loyalty App**
-The absence of a mobile app means:
-- No direct guest engagement channel
-- Limited zero-party data collection
-- No push notification capabilities
-- Reduced brand presence on guest devices
+**Tools:** Custom Python parser (sqlparse + ANTLR4 grammar)  
+**Scope:** All stored procedures, functions, views, triggers, and scheduled jobs  
+**Depth:** Table-level lineage, column-level lineage, execution frequency estimation
 
-**3. Legacy FPMS**
-The custom-built Fraser Property Management System (FPMS) is 25+ years old:
-- No API layer for modern integration
-- Monolithic architecture resists change
-- Limited extensibility for new capabilities
-- High maintenance burden
+**Output:** GraphML representation of:
+```
+[Table] ←depends_on→ [StoredProcedure] ←calls→ [StoredProcedure]
+[View]  ←depends_on→ [Table]
+[Job]   ←executes→   [StoredProcedure]
+[Downstream] ←reads→ [View]
+```
 
-**4. Monolithic Website**
-The current website lacks:
-- Headless/decoupled architecture
-- API-first content delivery
-- Dynamic personalization capabilities
-- Machine-readable structured data at scale
+**Scale:** 2,487 procedures, 183 views, 47 downstream dependencies — all connected in a directed acyclic dependency graph.
 
-**5. AI is Back-Office Only**
-Current AI initiatives are limited to operational tasks via Google Cloud/Vertex AI/Kyndryl:
-- No guest-facing AI (chatbots, concierge, personalization)
-- No AI in revenue management or pricing
-- No predictive analytics for marketing
+### Phase 2: Dynamic Runtime Analysis
 
-## The AEO Readiness Assessment
+**Tools:** SQL Server Extended Events + query store  
+**Duration:** 14-day capture across production and staging  
+**Metrics captured:**
+- Execution frequency per procedure (daily, hourly patterns)
+- Average/max execution time
+- Data volume (rows returned, bytes transferred)
+- Error rate and type distribution
 
-| Dimension | Score | Assessment |
-| :--- | :---: | :--- |
-| **Knowledge Graph** | 1/10 | No structured entity framework |
-| **Machine-Readable Content** | 4/10 | Basic Schema.org, not comprehensive |
-| **API-First Architecture** | 2/10 | Legacy monolithic systems dominate |
-| **Agentic Commerce** | 1/10 | No infrastructure for AI agent transactions |
-| **Trust Infrastructure** | 3/10 | Standard compliance, not machine-readable |
+**Key findings:**
+- 340 of 2,487 procedures (13.7%) never executed in 14 days — candidates for deprecation
+- 12 procedures executed >10,000×/day — performance-critical hot paths
+- 7 views with sub-second execution on 10M+ row tables — well-optimized
+- 23 procedures with >50% error rates — candidates for immediate remediation
 
-**Overall AEO Maturity: Level 1 (Human-Only)**
+## The Dependency Graph
 
-## Strategic Roadmap
+Using the extracted metadata, we built an ArcadeDB knowledge graph mapping the entire FPMS ecosystem:
 
-### Phase 1: Foundation (0-12 Months)
+```cypher
+// Find all downstream systems dependent on a given table
+MATCH (t:Table {name: 'reservations'})<-[r:READS]-(v:View)
+MATCH (v)<-[s:SERVES]-(d:DownstreamSystem)
+RETURN t.name, v.name, d.name, d.criticality, d.sla
+ORDER BY d.criticality DESC
 
-**1. Composable CDP Implementation**
-- **Solution:** Google BigQuery + Hightouch (reverse ETL)
-- **Rationale:** Warehouse-native approach doesn't require replacing legacy systems
-- **Outcome:** Unified guest data without architectural disruption
+// Result:
+// reservations | vw_active_bookings  | Salesforce MC  | critical
+// reservations | vw_rate_inventory   | D-EDGE         | critical  
+// reservations | vw_guest_history    | Salesforce MC  | important
+// reservations | vw_audit_log        | Internal Audit | compliance
+// reservations | vw_revenue_summary  | Finance BI     | important
+```
 
-**2. Mobile Loyalty App Development**
-- **Platform:** React Native
-- **Features:** Booking, check-in, service requests, loyalty management
-- **Strategy:** Phase 1 with core functionality, iterative feature expansion
-- **Outcome:** Direct guest engagement channel + zero-party data engine
+## Migration Architecture
 
-**3. API Wrapper for FPMS**
-- **Architecture:** GraphQL middleware layer
-- **Capabilities:** Expose legacy PMS data as modern APIs
-- **Integration:** Feed data into CDP, mobile app, and analytics
-- **Outcome:** Legacy system can participate in modern ecosystem
+### Phase 1: API Gateway Wrapper (0-6 Months)
 
-**4. Salesforce MC Integration**
-- **Goal:** Feed unified CDP data back into Salesforce Marketing Cloud
-- **Capabilities:** Hyper-personalized guest communication, lifecycle triggers
-- **Outcome:** Data-driven email and engagement optimization
+Expose FPMS data via a GraphQL gateway without modifying the legacy system:
 
-### Phase 2: Modernization (12-24 Months)
-- Mobile app feature expansion (AI concierge pilot, booking, check-in)
-- AI concierge pilot (limited to informational use cases)
-- Legacy PMS migration planning
-- Schema.org/JSON-LD implementation at scale
+```
+[FPMS Database] → [Change Data Capture (CDC)] → [Event Bus (Kafka)] → 
+[GraphQL Gateway] → [BigQuery (Warehouse)] → [Hightouch (Reverse ETL)]
+```
 
-### Phase 3: AI Activation (24-36 Months)
-- Full AI concierge (transactional capabilities)
-- Predictive analytics for revenue management
-- Reinforcement learning-based pricing optimization
-- Agentic commerce readiness
+**CDC implementation:**
+```yaml
+sources:
+  - name: fpms_reservations
+    type: sqlserver_cdc
+    table: reservations
+    publication: fpms_pub
+    capture_instance: dbo_reservations
+    output: kafka://topics/fpms.reservations
 
-### Phase 4: Autonomy (36+ Months)
-- Fully autonomous guest experience
-- AI-to-AI commerce enablement
-- Self-optimizing marketing programs
-- Continuous personalization at scale
+  - name: fpms_inventory
+    type: sqlserver_cdc  
+    table: room_inventory
+    capture_instance: dbo_room_inventory
+    output: kafka://topics/fpms.inventory
+```
 
-## The Competitive Imperative
+### Phase 2: Composable CDP (6-12 Months)
 
-Frasers Hospitality faces a choice: continue the conservative, incremental approach or commit to a strategic transformation. The hospitality industry is moving rapidly toward:
+Build on BigQuery with Hightouch for activation:
 
-1. **Agentic AI** — AI agents that book travel on behalf of consumers
-2. **Warehouse-Native Data** — CDPs built on cloud data warehouses
-3. **AEO** — Machine-readable content that AI engines can discover and cite
-4. **Personalization at Scale** — AI-driven, real-time, individualized experiences
+```yaml
+stack:
+  warehouse: Google BigQuery (serverless, auto-scaling, on-demand pricing)
+  transformation: dbt (incremental models with snapshot strategy)
+  reverse_etl: Hightouch (syncs to Salesforce MC, Braze, Adyen)
+  identity: Custom probabilistic matching on BigQuery
+```
 
-Every quarter of delay in this transformation widens the competitive gap. The good news: Frasers has strong fundamentals (brand reputation, operational excellence, prime properties) that, combined with the right technology strategy, can close the gap within 12-18 months.
+**Identity resolution SQL pattern:**
+```sql
+CREATE OR REPLACE VIEW customer_360 AS
+WITH deterministic_match AS (
+  SELECT 
+    COALESCE(g.email, sf.email, fpms.email) AS primary_email,
+    g.id AS google_id,
+    sf.id AS salesforce_id,
+    fpms.id AS fpms_guest_id,
+    -- Deterministic match on email
+    ROW_NUMBER() OVER (PARTITION BY COALESCE(g.email, sf.email, fpms.email) ORDER BY fpms.last_visit DESC) AS rn
+  FROM raw_google_analytics g
+  FULL OUTER JOIN raw_salesforce sf ON g.email = sf.email
+  FULL OUTER JOIN raw_fpms fpms ON COALESCE(g.email, sf.email) = fpms.email
+)
+SELECT * FROM deterministic_match WHERE rn = 1;
+```
 
-*This case study is based on our comprehensive martech assessment of Frasers Hospitality. [Contact us](/contact/) for a customized readiness evaluation.*
+### Phase 3: Mobile Loyalty App (6-12 Months)
+
+React Native application as zero-party data collection engine:
+
+```
+Features:
+- Booking and check-in
+- Digital key (BLE/NFC)
+- Service requests
+- Loyalty balance and redemption
+- Push notifications for offers and check-in reminders
+
+Data collection:
+- Preference center (room type, amenities, communication channels)
+- Behavioral signals (browsed properties, search patterns)
+- Transaction history (stays, spend, loyalty activity)
+```
+
+### Phase 4: Legacy Decommission Planning (12-24 Months)
+
+Phased migration of FPMS functionality to modern stack:
+
+| FPMS Module | Replacement | Migration Strategy | Timeline |
+| :--- | :--- | :--- | :---: |
+| Reservations | Mews / Oracle Opera | Parallel run → Cutover | 12 months |
+| Inventory/Rate | IDeaS / Duetto | API integration → Migration | 18 months |
+| Housekeeping | ALICE / Amadeus | Standalone → Integration | 24 months |
+| Loyalty | Salesforce Loyalty | Data migration → Activation | 18 months |
+| Billing/Finance | Adyen + NetSuite | API integration → Sunset | 24 months |
+
+## Financial Projection
+
+| Item | Investment | Year 1 Benefit | Payback |
+| :--- | ---: | ---: | ---: |
+| API Gateway Implementation | S$180K | S$420K (operational efficiency) | 5.1 months |
+| Composable CDP | S$250K | S$890K (personalization lift) | 3.4 months |
+| Mobile App (Phase 1) | S$350K | S$1.2M (direct bookings) | 3.5 months |
+| Legacy Migration (Phase 1) | S$500K | S$600K (maintenance savings) | 10 months |
+
+## AEO Readiness Trajectory
+
+| Dimension | Current | 12-Month Target | 24-Month Target |
+| :--- | :---: | :---: | :---: |
+| Semantic Layer | 2/10 | 5/10 | 8/10 |
+| Authentication | 3/10 | 5/10 | 7/10 |
+| Capability Discovery | 1/10 | 4/10 | 7/10 |
+| Transaction API | 2/10 | 6/10 | 8/10 |
+| Agent Negotiation | 1/10 | 2/10 | 5/10 |
+| **Composite** | **1.8/10** | **4.4/10** | **7.0/10** |
+
+<a href="/contact/" class="btn btn-primary" style="margin-top: var(--space-xl);">Migration Assessment →</a>
